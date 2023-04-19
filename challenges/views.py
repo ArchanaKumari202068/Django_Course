@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 from django.template.loader import render_to_string
 
@@ -27,11 +27,11 @@ monthly_challenge ={
     "may":"learn mongodb",
     "june":"Eat no meal for the entire month",
     "july": "walk for at least 20 minutes every day",
-    "august": "Learn every day django atleast  20 min",
-    "sep":' This month is not supported',
-    "oct": " This month is not supported",
-    "nov": "  This month is not supported",
-    "Dec": " This month is not supported"
+    "August": "Learn every day django atleast  20 min",
+    "Sep":' This month is not supported',
+    "Oct": " This month is not supported",
+    "Nov": "  This month is not supported",
+    "Dec": "  This month is not supported",
 
 
 }
@@ -81,11 +81,12 @@ def monthly_challenges(request,month):
             "month_name":  month.capitalize()
         })
         # response_data = render_to_string("challenges/challenge.html")
-        # return HttpResponse(response_data )
+        return HttpResponse(response_data )
 
-    except: 
-        response_data = render_to_string("404.html")
-        return HttpResponseNotFound(" This month is not supported")   
+    except:
+        return render(request,"404.html")
+        response_data =  render_to_string("404.html")
+        # return HttpResponseNotFound(" This month is not supported")   
 
 
     # if month =="january":
@@ -98,4 +99,4 @@ def monthly_challenges(request,month):
     # else:
     #     return  HttpResponseNotFound(" This month is not supported")
 
-    return HttpResponse(challenge_text)
+    # return HttpResponse(challenge_text)
